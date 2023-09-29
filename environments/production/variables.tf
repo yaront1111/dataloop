@@ -17,6 +17,7 @@ variable "credentials_file" {
   type        = string
 }
 
+
 variable "project_id" {
   description = "The ID of the GCP project"
   type        = string
