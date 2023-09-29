@@ -8,13 +8,16 @@ variable "region" {
 variable "project_id" {
   description = "GCP project ID"
   type        = string
+  default     = "1"
 }
 
 variable "credentials_file" {
   description = "Path to the GCP credentials file"
   type        = string
+  default     = "backend-config/gcp-accounts/account1.json"
   sensitive   = true
 }
+
 variable "subnet_name" {
   description = "The name of the subnet."
   type        = string
