@@ -12,3 +12,17 @@ variable "enable_network_policy" {
   description = "Enable network policies in GKE"
   default     = true
 }
+variable "credentials_file" {
+  description = "Path to the GCP credentials file"
+  type        = string
+}
+
+variable "project_id" {
+  description = "The ID of the GCP project"
+  type        = string
+}
+
+variable "region" {
+  description = "The GCP region to deploy to"
+  type        = string
+}
