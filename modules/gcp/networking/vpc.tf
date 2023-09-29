@@ -5,9 +5,9 @@ resource "google_compute_network" "vpc" {
   routing_mode            = var.routing_mode
   description             = var.vpc_description
 }
-resource "google_compute_network_tag" "vpc_tag" {
+resource "google_compute_network_label" "vpc_label" {
   network = google_compute_network.vpc.name
-  tags = {
-    environment = var.env_tags
+  labels = {
+    environment = var.envtags
   }
 }
