@@ -1,1 +1,0 @@
-{"Modules":[{"Key":"","Source":"","Dir":"."},{"Key":"network","Source":"git::https://github.com/yaront1111/dataloop.git//modules/gcp/networking","Dir":".terraform/modules/network/modules/gcp/networking"}]}
