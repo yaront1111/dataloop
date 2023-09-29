@@ -14,7 +14,7 @@ variable "project_id" {
 variable "credentials_file" {
   description = "Path to the GCP credentials file"
   type        = string
-  default     = "backend-config/gcp-accounts/account1.json"
+  default     = "../../../../backend-config/gcp-accounts/account1.json"
   sensitive   = true
 }
 
