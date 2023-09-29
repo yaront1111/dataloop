@@ -34,6 +34,19 @@ This repository serves as a comprehensive framework for Terraform configurations
 - Version control is simplified, making it easier to track changes, roll back, and collaborate.
 
 ---
+### Pros:
+- Isolation: Each cloud provider's modules are isolated from the others, reducing the chance of accidental overlap or conflict.
+- Clarity: It's immediately clear which cloud provider a particular module is for.
+- Specialization: Allows for cloud-specific optimizations or configurations without affecting modules for other providers.
+### Cons:
+- Duplication: If there's common logic between the AWS and GCP modules, we will have to duplicate code.
+- Navigation: Users have to navigate deeper into the directory structure to find the modules.
+- Cross-Cloud Aggregation: If we need a module that abstracts over multiple cloud providers (e.g., a multi-cloud load balancer), this structure makes that a bit less convienieante to implement.
+
+
+
+
+
 
 ## Usage Guide
 
