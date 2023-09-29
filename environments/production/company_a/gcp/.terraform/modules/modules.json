@@ -1,0 +1,1 @@
+{"Modules":[{"Key":"","Source":"","Dir":"."},{"Key":"gke_cluster","Source":"../../../../../modules/compute/gcp/gke_cluster","Dir":""},{"Key":"network","Source":"../../../../../modules/gcp/network","Dir":""}]}
