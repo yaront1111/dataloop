@@ -82,9 +82,3 @@ variable "source_ranges" {
   type        = list(string)
   default     = ["0.0.0.0/0"]
 }
-
-variable "env_tags" {
-  description = "Env Tags"
-  type        = string
-  default     = "DEV"
-}
