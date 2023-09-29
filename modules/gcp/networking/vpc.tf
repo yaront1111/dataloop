@@ -8,6 +8,6 @@ resource "google_compute_network" "vpc" {
 resource "google_compute_network_tag" "vpc_tag" {
   network = google_compute_network.vpc.name
   tags = {
-    environment = var.envtags
+    environment = var.env_tags
   }
 }
