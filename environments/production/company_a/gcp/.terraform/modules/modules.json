@@ -1,1 +1,1 @@
-{"Modules":[{"Key":"","Source":"","Dir":"."},{"Key":"gke_cluster","Source":"../../../../../modules/compute/gcp/gke_cluster","Dir":""},{"Key":"network","Source":"../../../../../modules/gcp/network","Dir":""}]}
+{"Modules":[{"Key":"","Source":"","Dir":"."},{"Key":"network","Source":"git::https://github.com/yaront1111/dataloop.git//modules/gcp/networking","Dir":".terraform/modules/network/modules/gcp/networking"}]}

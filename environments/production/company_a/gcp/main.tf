@@ -1,12 +1,18 @@
+terraform {
+  backend "gcs" {
+    bucket  = "my-bucket"
+    prefix  = "terraform/state"
+  }
+}
+
 provider "google" {
-  credentials = file(var.credentials_file)
+  version     = "~> 3.5"
+  credentials = var.credentials_file
   project     = var.project_id
   region      = var.region
 }
 
 module "network" {
-  source  = "git::https://github.com/yaront1111/dataloop.git/modules/gcp/networking"
-  project = var.project_id
+  source = "git::https://github.com/yaront1111/dataloop.git//modules/gcp/networking"
   region  = var.region
-  // Additional variables and settings specific to networking
 }
