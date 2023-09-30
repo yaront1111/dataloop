@@ -28,15 +28,40 @@ module "network" {
   allowed_protocol        = var.allowed_protocol
 }
 
+# GKE Cluster Configuration Module
 module "gke_cluster" {
   source = "git::https://github.com/yaront1111/dataloop.git//modules/gcp/compute/gks"
 
   credentials_path   = var.credentials_file
   project_id         = var.project_id
   region             = var.default_region
-  cluster_name       = "my-gke-cluster"
-  initial_node_count = 1
+  cluster_name       = var.cluster_name
+  initial_node_count = var.initial_node_count
+
+  module "gke_cluster" {
+  source = "git::https://github.com/yaront1111/dataloop.git//modules/gcp/compute/gks"
+
+  credentials_path    = var.credentials_file
+  project_id          = var.project_id
+  region              = var.default_region
+  cluster_name        = "my-gke-cluster"
+  initial_node_count  = 1
+
+  office_cidr_block   = "192.168.0.0/16"
+  office_display_name = "office-network"
+
+  network             = module.network.vpc_name
+  subnetwork          = module.network.subnet_name
+
+  depends_on = [
+    module.network
+  ]
+}
 
   network_name       = module.network.vpc_name
   subnet_name        = module.network.subnet_name
+
+  depends_on = [
+    module.network
+  ]
 }
