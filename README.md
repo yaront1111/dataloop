@@ -2,7 +2,7 @@
 
 ## Introduction
 
-This repository serves as a comprehensive framework for Terraform configurations. It is designed to be scalable, reusable, and most importantly, Git-friendly. The framework is split into various directories, each serving a specific purpose.
+This repository serves as POC for Terraform configurations. It is designed to be scalable, reusable, and expandable , the task was not spcific on wich vector we will expande (Cloud Accounts, comapnys etc) so i designed it to be flexiable  The framework is split into various directories, each serving a specific purpose.
 
 ---
 
@@ -19,16 +19,14 @@ This repository serves as a comprehensive framework for Terraform configurations
 ## Advantages
 
 ### Scalability
-- Easily add more environments, modules, and configurations as your project scales.
+- Easily add more environments, modules, and configurations
 
 ### Reusability
-- The modular approach allows you to reuse code across different environments and projects.
+- modular approach allows reuse code.
 
 ### Modularity
-- Make changes to individual components without affecting the entire ecosystem.
+- Make changes to components without affecting the entire ecosystem.
 
-### Organization
-- Each section of your infrastructure is neatly organized in its own directory.
 
 ### Git-friendliness
 - Version control is simplified, making it easier to track changes, roll back, and collaborate.
@@ -42,28 +40,3 @@ This repository serves as a comprehensive framework for Terraform configurations
 - Duplication: If there's common logic between the AWS and GCP modules, we will have to duplicate code.
 - Navigation: Users have to navigate deeper into the directory structure to find the modules.
 - Cross-Cloud Aggregation: If we need a module that abstracts over multiple cloud providers (e.g., a multi-cloud load balancer), this structure makes that a bit less convienieante to implement.
-
-
-
-
-
-
-## Usage Guide
-
-### Initial Setup
-
-Create a new Terraform configuration file at the root directory with the following code to initialize the required providers:
-
-```hcl
-terraform {
-  required_providers {
-    aws = {
-      source  = "hashicorp/aws"
-      version = "~> 4.0"
-    }
-  }
-}
-
-provider "aws" {
-  region = var.aws_region
-}
