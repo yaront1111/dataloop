@@ -52,10 +52,9 @@ module "gke_cluster" {
     }
   ]
 }
-
 resource "kubernetes_deployment" "nginx" {
   metadata {
-    name = "nginx"
+    name      = "nginx"
     namespace = "services"
   }
 
@@ -77,9 +76,10 @@ resource "kubernetes_deployment" "nginx" {
 
       spec {
         container {
-          name = "nginx"
+          name  = "nginx"
           image = "nginx:latest"
-          ports {
+
+          port {
             container_port = 80
           }
         }
@@ -114,7 +114,7 @@ resource "kubernetes_service" "nginx_lb" {
 
     type = "LoadBalancer"
 
-    ports {
+    port {
       port = 80
       target_port = 80
     }
@@ -134,7 +134,7 @@ resource "kubernetes_service" "grafana_lb" {
 
     type = "LoadBalancer"
 
-    ports {
+    port {
       port = 3000
       target_port = 3000
     }
