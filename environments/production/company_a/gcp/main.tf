@@ -34,12 +34,104 @@ module "gke_cluster" {
 
   credentials_path    = var.credentials_file
   project_id          = var.project_id
-  region              = var.default_region
+  region              = var.region
   cluster_name        = var.cluster_name
   initial_node_count  = var.initial_node_count
   office_display_name = var.office_display_name
-  office_cidr_block = var.office_cidr_block
+  office_cidr_block   = var.office_cidr_block
   depends_on = [
     module.network
   ]
+# Create namespaces
+  namespaces = [
+    {
+      name = "services"
+    },
+    {
+      name = "monitoring"
+    }
+  ]
+}
+
+resource "kubernetes_deployment" "nginx" {
+  metadata {
+    name = "nginx"
+    namespace = "services"
+  }
+
+  spec {
+    replicas = 1
+
+    selector {
+      match_labels = {
+        app = "nginx"
+      }
+    }
+
+    template {
+      metadata {
+        labels = {
+          app = "nginx"
+        }
+      }
+
+      spec {
+        container {
+          name = "nginx"
+          image = "nginx:latest"
+          ports {
+            container_port = 80
+          }
+        }
+      }
+    }
+  }
+}
+
+module "prometheus_grafana" {
+  source = "helm/prometheus-community/grafana"
+
+  namespace = "monitoring"
+
+  config_path = "./prometheus-grafana-config.yaml"
+}
+
+resource "kubernetes_service" "nginx_lb" {
+  metadata {
+    name = "nginx-lb"
+    namespace = "services"
+  }
+
+  spec {
+    selector = {
+      app = "nginx"
+    }
+
+    type = "LoadBalancer"
+
+    ports {
+      port = 80
+      target_port = 80
+    }
+  }
+}
+
+resource "kubernetes_service" "grafana_lb" {
+  metadata {
+    name = "grafana-lb"
+    namespace = "monitoring"
+  }
+
+  spec {
+    selector = {
+      app = "grafana"
+    }
+
+    type = "LoadBalancer"
+
+    ports {
+      port = 3000
+      target_port = 3000
+    }
+  }
 }

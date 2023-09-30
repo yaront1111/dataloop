@@ -46,3 +46,19 @@ variable "routing_mode" {
   description = "Routing mode for the resource."
   type        = string
 }
+
+variable "cluster_name" {
+  type = string
+}
+
+variable "initial_node_count" {
+  type = number
+}
+
+variable "office_display_name" {
+  type = string
+}
+
+variable "office_cidr_block" {
+  type = string
+}
