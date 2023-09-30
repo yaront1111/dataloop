@@ -21,13 +21,22 @@ module "network" {
   project_id              = var.project_id
   credentials_file        = var.credentials_file
   vpc_name                = var.vpc_name
-  auto_create_subnetworks = var.auto_create_subnetworks
   routing_mode            = var.routing_mode
-  vpc_description         = var.vpc_description
   subnet_name             = var.subnet_name
   ip_cidr_range           = var.ip_cidr_range
   firewall_name           = var.firewall_name
   allowed_protocol        = var.allowed_protocol
-  allowed_ports           = var.allowed_ports
-  source_ranges           = var.source_ranges
+}
+
+module "gke_cluster" {
+  source = "./gke_module"
+
+  credentials_path   = var.credentials_file
+  project_id         = var.project_id
+  region             = var.default_region
+  cluster_name       = "my-gke-cluster"
+  initial_node_count = 1
+
+  network_name       = module.network.vpc_name
+  subnet_name        = module.network.subnet_name
 }

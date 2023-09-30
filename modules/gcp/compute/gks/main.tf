@@ -1,52 +1,59 @@
-// Initialize the GCP provider
 provider "google" {
   credentials = file(var.credentials_path)
   project     = var.project_id
   region      = var.region
 }
 
-// Create a VPC network
-resource "google_compute_network" "vpc_network" {
-  name = "gke-network"
-}
-
-// Create a GKE cluster
+// GKE Cluster
 resource "google_container_cluster" "primary" {
   name     = var.cluster_name
   location = var.region
+  depends_on = [
+    module.network
+  ]
 
   remove_default_node_pool = true
   initial_node_count       = var.initial_node_count
 
   master_authorized_networks_config {
     cidr_blocks {
-      display_name = "office"
-      cidr_block   = "192.168.0.0/16"
+      display_name = var.office_display_name
+      cidr_block   = var.office_cidr_block
     }
   }
 
-  network    = google_compute_network.vpc_network.name
-  subnetwork = google_compute_subnetwork.subnet.name
+  network    = module.network.vpc_name
+  subnetwork = module.network.subnet_name
 
-  logging_service    = "logging.googleapis.com/kubernetes"
-  monitoring_service = "monitoring.googleapis.com/kubernetes"
+  logging_service    = var.logging_service
+  monitoring_service = var.monitoring_service
 
   network_policy {
-    enabled  = true
-    provider = "CALICO"
+    enabled  = var.network_policy_enabled
+    provider = var.network_policy_provider
   }
 
   maintenance_policy {
     daily_maintenance_window {
-      start_time = "03:00"
+      start_time = var.maintenance_start_time
     }
   }
 }
 
-// Create a subnetwork
-resource "google_compute_subnetwork" "subnet" {
-  name          = "gke-subnet"
-  ip_cidr_range = "10.0.0.0/16"
-  region        = var.region
-  network       = google_compute_network.vpc_network.name
+resource "kubernetes_namespace" "services" {
+  metadata {
+    name = var.services_namespace
+  }
+  depends_on = [
+    google_container_cluster.primary
+  ]
+}
+
+resource "kubernetes_namespace" "monitoring" {
+  metadata {
+    name = var.monitoring_namespace
+  }
+  depends_on = [
+    google_container_cluster.primary
+  ]
 }
