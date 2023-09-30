@@ -29,15 +29,6 @@ module "network" {
 }
 
 # GKE Cluster Configuration Module
-module "gke_cluster" {
-  source = "git::https://github.com/yaront1111/dataloop.git//modules/gcp/compute/gks"
-
-  credentials_path   = var.credentials_file
-  project_id         = var.project_id
-  region             = var.default_region
-  cluster_name       = var.cluster_name
-  initial_node_count = var.initial_node_count
-
   module "gke_cluster" {
   source = "git::https://github.com/yaront1111/dataloop.git//modules/gcp/compute/gks"
 
@@ -52,14 +43,6 @@ module "gke_cluster" {
 
   network             = module.network.vpc_name
   subnetwork          = module.network.subnet_name
-
-  depends_on = [
-    module.network
-  ]
-}
-
-  network_name       = module.network.vpc_name
-  subnet_name        = module.network.subnet_name
 
   depends_on = [
     module.network
