@@ -62,15 +62,8 @@ variable "maintenance_start_time" {
   type        = string
   default     = "03:00"
 }
-
-variable "services_namespace" {
-  description = "Name of the 'services' namespace"
-  type        = string
-  default     = "services"
-}
-
-variable "monitoring_namespace" {
-  description = "Name of the 'monitoring' namespace"
-  type        = string
-  default     = "monitoring"
+variable "namespaces" {
+  description = "List of namespaces to create"
+  type        = list(object({ name = string }))
+  default     = []
 }

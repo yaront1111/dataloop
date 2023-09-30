@@ -28,20 +28,10 @@ resource "google_container_cluster" "primary" {
   }
 }
 
-resource "kubernetes_namespace" "services" {
-  metadata {
-    name = var.services_namespace
-  }
-  depends_on = [
-    google_container_cluster.primary
-  ]
-}
+resource "kubernetes_namespace" "this" {
+  for_each = { for ns in var.namespaces : ns.name => ns }
 
-resource "kubernetes_namespace" "monitoring" {
   metadata {
-    name = var.monitoring_namespace
+    name = each.value.name
   }
-  depends_on = [
-    google_container_cluster.primary
-  ]
 }

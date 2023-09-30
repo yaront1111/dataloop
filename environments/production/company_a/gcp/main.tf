@@ -88,13 +88,18 @@ resource "kubernetes_deployment" "nginx" {
   }
 }
 
-module "prometheus_grafana" {
-  source = "helm/prometheus-community/grafana"
-
+resource "helm_release" "prometheus_grafana" {
+  name      = "prometheus_grafana"
   namespace = "monitoring"
+  chart     = "grafana"
+  repository = "https://prometheus-community.github.io/helm-charts"
 
-  config_path = "./prometheus-grafana-config.yaml"
+  set {
+    name  = "some_key"
+    value = "some_value"
+  }
 }
+
 
 resource "kubernetes_service" "nginx_lb" {
   metadata {
