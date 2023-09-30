@@ -1,5 +1,5 @@
   # Initialize Terraform
-  cd ../environments/production/
+  cd ../environments/production/company_a/gcp/
 
   terraform init
 
