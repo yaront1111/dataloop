@@ -9,3 +9,7 @@ firewall_name = "company-a-gke-fw-rules"
 allowed_protocol = "tcp"
 allowed_ports = ["80", "443"]
 source_ranges = ["0.0.0.0/0"]
+cluster_name = "Yaron"
+initial_node_count = 1
+office_cidr_block = "10.0.0.0/24"
+office_display_name = "office"
