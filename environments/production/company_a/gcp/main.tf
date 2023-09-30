@@ -37,11 +37,9 @@ module "gke_cluster" {
   region              = var.default_region
   cluster_name        = var.cluster_name
   initial_node_count  = var.initial_node_count
-
+  office_display_name = var.office_display_name
+  office_cidr_block = var.office_cidr_block
   depends_on = [
     module.network
   ]
-
-  vpc_name = module.network.vpc_name
-  subnet_name = module.network.subnet_name
 }
