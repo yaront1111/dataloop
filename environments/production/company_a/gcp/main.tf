@@ -29,7 +29,7 @@ module "network" {
 }
 
 module "gke_cluster" {
-  source = "./gke_module"
+  source = "git::https://github.com/yaront1111/dataloop.git//modules/gcp/compute/gks"
 
   credentials_path   = var.credentials_file
   project_id         = var.project_id
