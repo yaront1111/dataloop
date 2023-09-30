@@ -34,15 +34,12 @@ module "network" {
 
   credentials_path    = var.credentials_file
   project_id          = var.project_id
-  region              = var.default_region
+  region              = var.region
   cluster_name        = "my-gke-cluster"
   initial_node_count  = 1
 
   office_cidr_block   = "192.168.0.0/16"
   office_display_name = "office-network"
-
-  network             = module.network.vpc_name
-  subnetwork          = module.network.subnet_name
 
   depends_on = [
     module.network

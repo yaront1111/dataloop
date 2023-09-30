@@ -16,9 +16,6 @@ resource "google_container_cluster" "primary" {
     }
   }
 
-  network    = module.network.vpc_name
-  subnetwork = module.network.subnet_name
-
   logging_service    = var.logging_service
   monitoring_service = var.monitoring_service
 
