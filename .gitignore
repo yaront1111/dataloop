@@ -34,3 +34,4 @@ logs/
 .DS_Store
 .json
 *.json
+backend-config/gcp-accounts/account1.json
