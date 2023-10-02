@@ -68,3 +68,8 @@ variable "namespaces" {
   type        = list(object({ name = string }))
   default     = []
 }
+
+variable "location" {
+  description = "The location (region or zone) of the GKE cluster."
+  type        = string
+}
