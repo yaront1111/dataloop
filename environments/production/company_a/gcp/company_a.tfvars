@@ -11,3 +11,4 @@ cluster_name = "yaron-cluster"
 initial_node_count = 1
 office_cidr_block = "10.0.0.0/24"
 office_display_name = "office"
+project_id = "dataloop-400817"
