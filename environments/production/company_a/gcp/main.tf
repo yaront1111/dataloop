@@ -53,9 +53,16 @@ module "gke_cluster" {
     }
   ]
 }
-provider "kubernetes" {
-  config_path = module.gke_cluster.kubeconfig_raw
+
+data "local_file" "kubeconfig_file" {
+  filename = module.my-module.kubeconfig_file
 }
+
+provider "kubernetes" {
+  config_path = "/tmp/my-kubeconfig.yaml"
+}
+
+
 
 resource "kubernetes_deployment" "nginx" {
   depends_on = [module.gke_cluster]
@@ -94,6 +101,20 @@ resource "kubernetes_deployment" "nginx" {
   }
 }
 
+resource "helm_release" "prometheus_grafana" {
+  depends_on = [module.gke_cluster]
+  name      = "prometheus_grafana"
+  namespace = "monitoring"
+  chart     = "prometheus-community/kube-prometheus-stack"
+  repository = "https://prometheus-community.github.io/helm-charts"
+
+  set {
+    name  = "some_key"
+    value = "some_value"
+  }
+}
+
+
 resource "kubernetes_service" "nginx_lb" {
   depends_on = [module.gke_cluster]
   metadata {
@@ -116,7 +137,6 @@ resource "kubernetes_service" "nginx_lb" {
 }
 
 resource "kubernetes_service" "grafana_lb" {
-  depends_on = [module.gke_cluster]
   metadata {
     name = "grafana-lb"
     namespace = "monitoring"
