@@ -2,6 +2,9 @@
 resource "google_container_cluster" "primary" {
   name     = var.cluster_name
   location = "us-central1-f"
+  network  = var.vpc_name
+  subnetwork = var.subnet_name
+  firewall_names = var.firewall_name
 
   remove_default_node_pool = true
   initial_node_count       = var.initial_node_count

@@ -79,3 +79,11 @@ variable "use_private_endpoint" {
   type        = bool
   default     = false
 }
+
+variable "vpc_name" {
+  type        = string
+}
+
+variable "subnet_name" {
+  type        = string
+}
