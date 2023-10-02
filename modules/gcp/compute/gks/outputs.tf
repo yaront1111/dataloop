@@ -28,3 +28,14 @@ output "kubeconfig_raw" {
     token                  = data.google_client_config.provider.access_token
   })
 }
+
+output "host" {
+  description = "The host value for use with the kubernetes provider."
+  value       = local.host
+}
+
+output "token" {
+  sensitive   = true
+  description = "The token value for use with the kubernetes provider."
+  value       = data.google_client_config.provider.access_token
+}
