@@ -54,14 +54,21 @@ module "gke_cluster" {
   ]
 }
 
-provider "kubernetes" {
-  kubeconfig = templatefile("${path.module}/templates/kubeconfig-template.yaml.tpl", {
-    context                = local.context
-    cluster_ca_certificate = local.cluster_ca_certificate
-    endpoint               = local.endpoint
-    token                  = data.google_client_config.provider.access_token
-  })
+output "debug_cluster_ca_certificate" {
+  value = module.gke_cluster.gke_cluster_ca_certificate
 }
+
+output "debug_host" {
+  value = module.gke_cluster.gke_cluster_endpoint
+}
+
+provider "kubernetes" {
+  host                   = "https://${module.gke_cluster.gke_cluster_endpoint}:6443"
+  client_certificate     = module.gke_cluster.client_certificate
+  client_key             = module.gke_cluster.client_key
+  cluster_ca_certificate = base64decode(module.gke_cluster.gke_cluster_ca_certificate)
+}
+
 
 
 

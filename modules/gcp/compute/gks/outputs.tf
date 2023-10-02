@@ -28,3 +28,10 @@ output "token" {
   description = "The token value for use with the kubernetes provider."
   value       = data.google_client_config.provider.access_token
 }
+output "client_certificate" {
+  value = google_container_cluster.primary.master_auth.0.client_certificate
+}
+
+output "client_key" {
+  value = google_container_cluster.primary.master_auth.0.client_key
+}
