@@ -48,7 +48,7 @@ resource "google_container_node_pool" "primary_nodes" {
   }
 }
 resource "kubernetes_namespace" "this" {
-  depends_on = [google_container_cluster.my_cluster]
+  depends_on = [google_container_cluster.primary]
   for_each = { for ns in var.namespaces : ns.name => ns }
 
   metadata {
