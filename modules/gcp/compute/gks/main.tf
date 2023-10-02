@@ -1,7 +1,7 @@
 // GKE Cluster
 resource "google_container_cluster" "primary" {
   name     = var.cluster_name
-  location = var.region
+  location = "us-central1-f"
 
   remove_default_node_pool = true
   initial_node_count       = var.initial_node_count
@@ -30,7 +30,7 @@ resource "google_container_cluster" "primary" {
 resource "google_container_node_pool" "primary_nodes" {
   name       = "my-node-pool"
   cluster    = var.cluster_name
-  location   = var.region
+  location   = "us-central1-f"
   node_count = 1
 
   node_config {
