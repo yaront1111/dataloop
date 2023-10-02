@@ -1,7 +1,7 @@
 // GCP Firewall Rules
 resource "google_compute_firewall" "fw_rules" {
   name    = var.firewall_name
-  network = google_compute_network.vpc.name
+  network = var.vpc_name
 
   allow {
     protocol = var.allowed_protocol
