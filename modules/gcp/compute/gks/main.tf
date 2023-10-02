@@ -1,6 +1,7 @@
 // GKE Cluster
 resource "google_container_cluster" "primary" {
   name     = var.cluster_name
+  machine_type = "e2-micro"
   location = var.region
 
   remove_default_node_pool = true

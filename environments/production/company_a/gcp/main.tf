@@ -94,9 +94,10 @@ resource "kubernetes_deployment" "nginx" {
 }
 
 resource "helm_release" "prometheus_grafana" {
+  depends_on = [module.gke_cluster]
   name      = "prometheus_grafana"
   namespace = "monitoring"
-  chart     = "grafana"
+  chart     = "prometheus-community/kube-prometheus-stack"
   repository = "https://prometheus-community.github.io/helm-charts"
 
   set {
