@@ -52,7 +52,12 @@ module "gke_cluster" {
     }
   ]
 }
+
+provider "kubernetes" {
+  config_path = "${module.gke_cluster.kubeconfig_output_path}"
+}
 resource "kubernetes_deployment" "nginx" {
+  depends_on = [module.gke_cluster]
   metadata {
     name      = "nginx"
     namespace = "services"
