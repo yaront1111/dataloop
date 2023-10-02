@@ -18,20 +18,6 @@ output "cluster_location" {
   description = "The location of the GKE cluster."
 }
 
-locals {
-  kubeconfig_file = local_file.kubeconfig_file
-}
-
-resource "local_file" "kubeconfig_file" {
-  content = templatefile("${path.module}/templates/kubeconfig-template.yaml.tpl", {
-    context                = local.context
-    cluster_ca_certificate = local.cluster_ca_certificate
-    endpoint               = local.endpoint
-    token                  = data.google_client_config.provider.access_token
-  })
-  filename = tempfile()
-}
-
 output "host" {
   description = "The host value for use with the kubernetes provider."
   value       = local.host
