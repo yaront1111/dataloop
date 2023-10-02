@@ -1,7 +1,6 @@
 // GKE Cluster
 resource "google_container_cluster" "primary" {
   name     = var.cluster_name
-  machine_type = "e2-micro"
   location = var.region
 
   remove_default_node_pool = true
@@ -27,6 +26,14 @@ resource "google_container_cluster" "primary" {
       start_time = var.maintenance_start_time
     }
   }
+}
+resource "google_container_cluster_node_pool" "primary" {
+  name = "primary-pool"
+  cluster = google_container_cluster.primary.name
+
+  node_count = var.initial_node_count
+
+  machine_type = "e2-micro"
 }
 
 resource "kubernetes_namespace" "this" {
