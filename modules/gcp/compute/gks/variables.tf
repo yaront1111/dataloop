@@ -87,6 +87,3 @@ variable "vpc_name" {
 variable "subnet_name" {
   type        = string
 }
-variable "firewall_name" {
-  type        = string
-}
