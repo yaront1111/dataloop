@@ -56,11 +56,11 @@ module "gke_cluster" {
 resource "google_container_node_pool" "primary_nodes" {
   name       = "my-node-pool"
   cluster    = module.gke_cluster.gke_cluster_name
-  location   = module.gke_cluster.location
+  location   = module.gke_cluster.cluster_location
   node_count = 1
 
   node_config {
-    machine_type = "f1-micro"
+    machine_type = "e2-micro"
     metadata = {
       disable-legacy-endpoints = "true"
     }
