@@ -6,3 +6,4 @@
   terraform validate
   # Run Terraform plan
   terraform plan -var-file="company_a.tfvars"
+  terraform apply -var-file="company_a.tfvars"

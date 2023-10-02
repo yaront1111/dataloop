@@ -32,3 +32,5 @@ logs/
 .idea/
 .vscode/
 .DS_Store
+.json
+*.json

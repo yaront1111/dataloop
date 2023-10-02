@@ -54,7 +54,7 @@ module "gke_cluster" {
 }
 
 provider "kubernetes" {
-  config_path = "${module.gke_cluster.kubeconfig_output_path}"
+  config_path = "${module.gke_cluster.kubeconfig}"
 }
 resource "kubernetes_deployment" "nginx" {
   depends_on = [module.gke_cluster]
