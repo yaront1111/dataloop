@@ -27,14 +27,6 @@ resource "google_container_cluster" "primary" {
     }
   }
 }
-resource "google_container_cluster_node_pool" "primary" {
-  name = "primary-pool"
-  cluster = google_container_cluster.primary.name
-
-  node_count = var.initial_node_count
-
-  machine_type = "e2-micro"
-}
 
 resource "kubernetes_namespace" "this" {
   for_each = { for ns in var.namespaces : ns.name => ns }

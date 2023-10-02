@@ -53,6 +53,25 @@ module "gke_cluster" {
   ]
 }
 
+resource "google_container_node_pool" "primary_nodes" {
+  name       = "my-node-pool"
+  cluster    = module.gke_cluster.name
+  location   = module.gke_cluster.location
+  node_count = 1
+
+  node_config {
+    machine_type = "f1-micro"
+    metadata = {
+      disable-legacy-endpoints = "true"
+    }
+
+    oauth_scopes = [
+      "https://www.googleapis.com/auth/logging.write",
+      "https://www.googleapis.com/auth/monitoring",
+    ]
+  }
+}
+
 provider "kubernetes" {
   config_path = "${module.gke_cluster.kubeconfig}"
 }
