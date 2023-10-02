@@ -23,10 +23,6 @@ clusters:
 EOT
   description = "The kubeconfig configuration file."
 }
-output "cluster_name" {
-  value       = google_container_cluster.primary.name
-  description = "The name of the GKE cluster."
-}
 
 output "cluster_location" {
   value       = google_container_cluster.primary.location
