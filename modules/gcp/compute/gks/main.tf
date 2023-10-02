@@ -78,7 +78,7 @@ resource "null_resource" "create_kubeconfig_file" {
 
   provisioner "local-exec" {
     command = <<-EOT
-      echo '${self.triggers.kubeconfig}' > /tmp/my-kubeconfig.yaml
+      echo '${self.triggers.kubeconfig}' > /my-kubeconfig.yaml
     EOT
   }
 }

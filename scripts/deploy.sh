@@ -1,7 +1,7 @@
   # Initialize Terraform
   cd ../environments/production/company_a/gcp/
 
-  terraform init
+  terraform init -upgrade
 
   terraform validate
   # Run Terraform plan
