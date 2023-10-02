@@ -54,10 +54,10 @@ module "gke_cluster" {
 }
 
 provider "kubernetes" {
-  config_path = "${google_container_cluster.primary.kubeconfig}"
+  config_path = "${module.gke_cluster.kubeconfig}"
 }
 resource "kubernetes_deployment" "nginx" {
-  kubeconfig = google_container_cluster.primary.kubeconfig
+  kubeconfig = module.gke_cluster.kubeconfig
   depends_on = [module.gke_cluster]
   metadata {
     name      = "nginx"

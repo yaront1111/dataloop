@@ -17,3 +17,7 @@ output "cluster_location" {
   value       = google_container_cluster.primary.location
   description = "The location of the GKE cluster."
 }
+
+output "kubeconfig" {
+  value = google_container_cluster.primary.kubeconfig
+}
