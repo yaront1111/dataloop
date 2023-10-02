@@ -55,7 +55,12 @@ module "gke_cluster" {
 }
 
 provider "kubernetes" {
-  config_path = "/tmp/my-kubeconfig.yaml"
+  kubeconfig = templatefile("${path.module}/templates/kubeconfig-template.yaml.tpl", {
+    context                = local.context
+    cluster_ca_certificate = local.cluster_ca_certificate
+    endpoint               = local.endpoint
+    token                  = data.google_client_config.provider.access_token
+  })
 }
 
 

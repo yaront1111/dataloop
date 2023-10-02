@@ -66,22 +66,6 @@ locals {
   context                = data.google_container_cluster.gke_cluster.name != null ? data.google_container_cluster.gke_cluster.name : ""
 }
 
-resource "null_resource" "create_kubeconfig_file" {
-  triggers = {
-    kubeconfig = templatefile("${path.module}/templates/kubeconfig-template.yaml.tpl", {
-      context                = local.context
-      cluster_ca_certificate = local.cluster_ca_certificate
-      endpoint               = local.endpoint
-      token                  = data.google_client_config.provider.access_token
-    })
-  }
-
-  provisioner "local-exec" {
-    command = <<-EOT
-      echo '${self.triggers.kubeconfig}' > /my-kubeconfig.yaml && chmod 644 /my-kubeconfig.yaml
-    EOT
-  }
-}
 
 data "google_container_cluster" "gke_cluster" {
   name     = var.cluster_name
