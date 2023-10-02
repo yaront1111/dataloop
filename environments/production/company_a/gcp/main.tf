@@ -54,10 +54,6 @@ module "gke_cluster" {
   ]
 }
 
-data "local_file" "kubeconfig_file" {
-  filename = module.my-module.kubeconfig_file
-}
-
 provider "kubernetes" {
   config_path = "/tmp/my-kubeconfig.yaml"
 }
