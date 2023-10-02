@@ -35,6 +35,7 @@ module "gke_cluster" {
   credentials_path    = var.credentials_file
   project_id          = var.project_id
   region              = var.region
+  location            = "us-central1-f"
   cluster_name        = var.cluster_name
   initial_node_count  = var.initial_node_count
   office_display_name = var.office_display_name
@@ -53,9 +54,6 @@ module "gke_cluster" {
   ]
 }
 
-provider "kubernetes" {
-  config_path = "${module.gke_cluster.kubeconfig}"
-}
 resource "kubernetes_deployment" "nginx" {
   kubeconfig = module.gke_cluster.kubeconfig
   depends_on = [module.gke_cluster]
