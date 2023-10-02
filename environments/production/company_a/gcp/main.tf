@@ -55,7 +55,7 @@ module "gke_cluster" {
 
 resource "google_container_node_pool" "primary_nodes" {
   name       = "my-node-pool"
-  cluster    = module.gke_cluster.name
+  cluster    = module.gke_cluster.gke_cluster_name
   location   = module.gke_cluster.location
   node_count = 1
 
