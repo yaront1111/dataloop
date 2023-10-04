@@ -56,13 +56,6 @@ module "gke_cluster" {
   ]
 }
 
-output "debug_cluster_ca_certificate" {
-  value = module.gke_cluster.gke_cluster_ca_certificate
-}
-
-output "debug_host" {
-  value = module.gke_cluster.gke_cluster_endpoint
-}
 
 provider "kubernetes" {
   host     = "https://${module.gke_cluster.gke_cluster_endpoint}"
