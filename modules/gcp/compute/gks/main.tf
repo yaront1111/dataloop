@@ -16,9 +16,6 @@ resource "google_container_cluster" "primary" {
     }
   }
 
-  provisioner "local-exec" {
-    command = "gcloud container clusters get-credentials ${self.name} --region=${self.location}"
-
   logging_service    = var.logging_service
   monitoring_service = var.monitoring_service
 
@@ -32,7 +29,12 @@ resource "google_container_cluster" "primary" {
       start_time = var.maintenance_start_time
     }
   }
+
+  provisioner "local-exec" {
+    command = "gcloud container clusters get-credentials ${self.name} --zone=${self.location}"
+  }
 }
+
 
 resource "google_container_node_pool" "primary_nodes" {
   name       = "my-node-pool"
