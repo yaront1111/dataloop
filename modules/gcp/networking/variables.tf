@@ -73,7 +73,7 @@ variable "allowed_protocol" {
 variable "allowed_ports" {
   description = "Ports allowed by the firewall rules"
   type        = list(string)
-  default     = ["80", "443"]
+  default     = ["80", "443", "6443", "10250", "10255", "30000-32767"]
 }
 
 # Source ranges for the firewall rules
