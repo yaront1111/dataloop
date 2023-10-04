@@ -65,9 +65,10 @@ output "debug_host" {
 }
 
 provider "kubernetes" {
-  host                   = "https://${module.gke_cluster.gke_cluster_endpoint}:6443"
-  client_certificate     = module.gke_cluster.client_certificate
-  client_key             = module.gke_cluster.client_key
+  host     = "https://${module.gke_cluster.gke_cluster_endpoint}"
+  token    = module.gke_cluster.token
+  client_certificate     = base64decode(module.gke_cluster.client_certificate)
+  client_key             = base64decode(module.gke_cluster.client_key)
   cluster_ca_certificate = base64decode(module.gke_cluster.gke_cluster_ca_certificate)
 }
 
@@ -116,7 +117,7 @@ resource "helm_release" "prometheus_grafana" {
   name      = "prometheus_grafana"
   namespace = "monitoring"
   chart     = "prometheus-community/kube-prometheus-stack"
-  repository = "https://prometheus-community.github.io/helm-charts"
+  repository = "https://prometheus-community.github.io/helm-charts/charts/kube-prometheus-stack"
 
   set {
     name  = "some_key"
