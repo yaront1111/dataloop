@@ -8,12 +8,16 @@ resource "google_container_cluster" "primary" {
 
   remove_default_node_pool = true
   initial_node_count       = var.initial_node_count
+
   master_authorized_networks_config {
     cidr_blocks {
       display_name = var.office_display_name
       cidr_block   = var.office_cidr_block
     }
   }
+
+  provisioner "local-exec" {
+    command = "gcloud container clusters get-credentials ${self.name} --region=${self.location}"
 
   logging_service    = var.logging_service
   monitoring_service = var.monitoring_service
