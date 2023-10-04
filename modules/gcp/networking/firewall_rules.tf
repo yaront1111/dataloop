@@ -9,4 +9,7 @@ resource "google_compute_firewall" "fw_rules" {
   }
 
   source_ranges = var.source_ranges
+  depends_on = [
+    var.vpc_name
+  ]
 }
