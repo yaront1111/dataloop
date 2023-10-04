@@ -124,7 +124,7 @@ provider "helm" {
 
 resource "helm_release" "prometheus-grafana" {
   depends_on = [module.gke_cluster]
-  name      = "prometheus_grafana"
+  name      = "prometheus-grafana"
   namespace = "monitoring"
   chart     = "kube-prometheus-stack"
   repository = "https://prometheus-community.github.io/helm-charts"
