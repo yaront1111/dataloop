@@ -112,12 +112,22 @@ resource "kubernetes_deployment" "nginx" {
   }
 }
 
-resource "helm_release" "prometheus_grafana" {
+provider "helm" {
+  kubernetes {
+    host                   = "https://${module.gke_cluster.gke_cluster_endpoint}"
+    token                  = module.gke_cluster.token
+    client_certificate     = base64decode(module.gke_cluster.client_certificate)
+    client_key             = base64decode(module.gke_cluster.client_key)
+    cluster_ca_certificate = base64decode(module.gke_cluster.gke_cluster_ca_certificate)
+  }
+}
+
+resource "helm_release" "prometheus-grafana" {
   depends_on = [module.gke_cluster]
   name      = "prometheus_grafana"
   namespace = "monitoring"
-  chart     = "prometheus-community/kube-prometheus-stack"
-  repository = "https://prometheus-community.github.io/helm-charts/charts/kube-prometheus-stack"
+  chart     = "kube-prometheus-stack"
+  repository = "https://prometheus-community.github.io/helm-charts"
 
   set {
     name  = "some_key"
