@@ -1,4 +1,4 @@
-region = "us-central"
+region = "us-central1"
 vpc_name = "company-a-gke-vpc3"
 auto_create_subnetworks = false
 routing_mode = "REGIONAL"
@@ -12,4 +12,4 @@ initial_node_count = 1
 office_cidr_block = "10.0.0.0/24"
 office_display_name = "office"
 project_id = "dataloop-400817"
-source_ranges = "10.0.0.0/16"
+source_ranges = "0.0.0.0/0"

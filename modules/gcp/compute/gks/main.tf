@@ -48,6 +48,7 @@ resource "google_container_node_pool" "primary_nodes" {
       "https://www.googleapis.com/auth/monitoring",
     ]
   }
+  depends_on = [google_container_cluster.primary]
 }
 resource "kubernetes_namespace" "this" {
   depends_on = [google_container_cluster.primary]
@@ -73,6 +74,7 @@ data "google_container_cluster" "gke_cluster" {
   name     = var.cluster_name
   location = var.location
   project  = var.project_id
+  depends_on = [google_container_cluster.primary]
 }
 
 data "google_client_config" "provider" {}
