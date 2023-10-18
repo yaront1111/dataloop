@@ -1,5 +1,4 @@
 resource "helm_release" "prometheus-grafana" {
-  depends_on = [module.gke_cluster]
   name      = "prometheus-grafana"
   namespace = "monitoring"
   chart     = "kube-prometheus-stack"
@@ -13,7 +12,6 @@ resource "helm_release" "prometheus-grafana" {
 
 
 resource "kubernetes_service" "nginx_lb" {
-  depends_on = [module.gke_cluster]
   metadata {
     name = "nginx-lb"
     namespace = "services"
