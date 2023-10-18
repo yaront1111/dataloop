@@ -56,55 +56,6 @@ module "gke_cluster" {
   ]
 }
 
-
-provider "kubernetes" {
-  host     = "https://${module.gke_cluster.gke_cluster_endpoint}"
-  token    = module.gke_cluster.token
-  client_certificate     = base64decode(module.gke_cluster.client_certificate)
-  client_key             = base64decode(module.gke_cluster.client_key)
-  cluster_ca_certificate = base64decode(module.gke_cluster.gke_cluster_ca_certificate)
-}
-
-
-
-
-resource "kubernetes_deployment" "nginx" {
-  depends_on = [module.gke_cluster]
-  metadata {
-    name      = "nginx"
-    namespace = "services"
-  }
-
-  spec {
-    replicas = 1
-
-    selector {
-      match_labels = {
-        app = "nginx"
-      }
-    }
-
-    template {
-      metadata {
-        labels = {
-          app = "nginx"
-        }
-      }
-
-      spec {
-        container {
-          name  = "nginx"
-          image = "nginx:latest"
-
-          port {
-            container_port = 80
-          }
-        }
-      }
-    }
-  }
-}
-
 provider "helm" {
   kubernetes {
     host                   = "https://${module.gke_cluster.gke_cluster_endpoint}"
@@ -112,60 +63,5 @@ provider "helm" {
     client_certificate     = base64decode(module.gke_cluster.client_certificate)
     client_key             = base64decode(module.gke_cluster.client_key)
     cluster_ca_certificate = base64decode(module.gke_cluster.gke_cluster_ca_certificate)
-  }
-}
-
-resource "helm_release" "prometheus-grafana" {
-  depends_on = [module.gke_cluster]
-  name      = "prometheus-grafana"
-  namespace = "monitoring"
-  chart     = "kube-prometheus-stack"
-  repository = "https://prometheus-community.github.io/helm-charts"
-
-  set {
-    name  = "some_key"
-    value = "some_value"
-  }
-}
-
-
-resource "kubernetes_service" "nginx_lb" {
-  depends_on = [module.gke_cluster]
-  metadata {
-    name = "nginx-lb"
-    namespace = "services"
-  }
-
-  spec {
-    selector = {
-      app = "nginx"
-    }
-
-    type = "LoadBalancer"
-
-    port {
-      port = 80
-      target_port = 80
-    }
-  }
-}
-
-resource "kubernetes_service" "grafana_lb" {
-  metadata {
-    name = "grafana-lb"
-    namespace = "monitoring"
-  }
-
-  spec {
-    selector = {
-      app = "grafana"
-    }
-
-    type = "LoadBalancer"
-
-    port {
-      port = 3000
-      target_port = 3000
-    }
   }
 }
