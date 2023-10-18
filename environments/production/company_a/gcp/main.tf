@@ -79,5 +79,6 @@ provider "helm" {
 }
 
 module "ngninx" {
+  depends_on = [module.gke_cluster]
   source = "git::https://github.com/yaront1111/dataloop.git//modules/gcp/k8s"
 }
