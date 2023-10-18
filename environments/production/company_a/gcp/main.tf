@@ -3,6 +3,10 @@ terraform {
     google = {
       source  = "hashicorp/google"
     }
+    nginx = {
+      source = "getstackhead/nginx"
+      version = "1.3.2"
+    }
 #   backend "gcs" {
 #     bucket  = "my-bucket"
 #     prefix  = "terraform/state"
@@ -54,6 +58,14 @@ module "gke_cluster" {
       name = "monitoring"
     }
   ]
+}
+
+provider  kubernetes {
+  host                   = "https://${module.gke_cluster.gke_cluster_endpoint}"
+  token                  = module.gke_cluster.token
+  client_certificate     = base64decode(module.gke_cluster.client_certificate)
+  client_key             = base64decode(module.gke_cluster.client_key)
+  cluster_ca_certificate = base64decode(module.gke_cluster.gke_cluster_ca_certificate)
 }
 
 provider "helm" {
