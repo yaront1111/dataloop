@@ -1,5 +1,4 @@
 resource "kubernetes_deployment" "nginx" {
-  depends_on = [module.gke_cluster]
   metadata {
     name      = "nginx"
     namespace = "services"

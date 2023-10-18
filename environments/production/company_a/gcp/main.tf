@@ -65,3 +65,7 @@ provider "helm" {
     cluster_ca_certificate = base64decode(module.gke_cluster.gke_cluster_ca_certificate)
   }
 }
+
+module "ngninx" {
+  source = "git::https://github.com/yaront1111/dataloop.git//modules/gcp/k8s"
+}
